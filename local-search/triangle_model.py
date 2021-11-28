@@ -86,7 +86,7 @@ class Model:
       if is_conflict(self.pieces[2].two, self.pieces[3].zero):
         conflicts += 1
       #piece 3
-      if is_conflict(self.pieces[3].one, self.board[4]):
+      if is_conflict(self.pieces[3].one, self.board[5]):
         conflicts += 1
       if is_conflict(self.pieces[3].two, self.pieces[7].one):
         conflicts += 1
@@ -109,7 +109,7 @@ class Model:
       if is_conflict(self.pieces[7].two, self.pieces[8].zero):
         conflicts += 1
       #piece 8
-      if is_conflict(self.pieces[8].one, self.board[5]):
+      if is_conflict(self.pieces[8].one, self.board[6]):
         conflicts += 1
       if is_conflict(self.pieces[8].two, self.pieces[14].one):
         conflicts += 1
@@ -147,11 +147,10 @@ class Model:
     
     return conflicts
 
-
-  def print_pieces(self):
+  def print_solution(self):
     count = 0
     for piece in self.pieces:
-      print( count, "zero:", piece.zero, "one:", piece.one, "two:", piece.two)
+      print( count, piece.zero + piece.one + piece.two)
       count += 1
 
 
@@ -162,6 +161,22 @@ def is_conflict(side1, side2):
   elif side1.islower() and side2.isupper():
     if side1 == side2.lower():
       return False
+  elif side1 == "[" and side2 == "{":
+    return False
+  elif side1 == "{" and side2 == "[":
+    return False
+  elif side1 == "}" and side2 == "]":
+    return False
+  elif side1 == "]" and side2 == "}":
+    return False
+  elif side1 == "^" and side2 == "~":
+    return False
+  elif side1 == "~" and side2 == "^":
+    return False
+  elif side1 == "|" and side2 == "\\":
+    return False
+  elif side1 == "\\" and side2 == "|":
+    return False
   return True
 
 
@@ -176,8 +191,9 @@ class Piece:
 
   def rotate(self, direction):
     if direction == "clockwise":
-      self.zero, self.one, self.two = self.two, self.zero, self.one
-    elif direction == "counterclockwise":
-      self.zero, self.one, self.two = self.one, self.two, self.zero
+      temp = self.zero
+      self.zero = self.one
+      self.one = self.two
+      self.two = temp
 
   
