@@ -225,10 +225,8 @@ class Model:
 
 
   def print_solution(self):
-    count = 0
     for piece in self.placed_pieces:
-      print( count, piece.zero + piece.one + piece.two)
-      count += 1
+      print(piece.zero + piece.one + piece.two)
 
 
 def is_conflict(side1, side2):

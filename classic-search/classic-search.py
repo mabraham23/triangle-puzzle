@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 
-from __future__ import with_statement
-import random
-import math
-from contextlib import contextmanager
 import sys
 from triangle_model import Model
-import copy
 
 def depth_first_search(initial_state):
   Q = []
@@ -22,7 +17,6 @@ def depth_first_search(initial_state):
     for a in actions:
       new_state = state.apply_action(a)
       Q.insert(0, new_state)
-      # Q.append(new_state)
   return
 
 
@@ -55,14 +49,10 @@ def main():
   global best_board
   global best_conflicts
 
-  # filepath = sys.argv[1]
-  filepath = 'puzzles/puzzle-4-30-01'
+  filepath = sys.argv[1]
   model = read_data(filepath)
-  num = model.calc_num_conflicts()
   complete_puzzle = depth_first_search(model)
   complete_puzzle.print_solution()
-
-
 
 if __name__ == '__main__':
   main()

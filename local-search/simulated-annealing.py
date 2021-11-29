@@ -43,9 +43,9 @@ def neighbors(model):
 # returns the board with the least conflicts
 def simulated_annealing(model):
   T_min = pow(10, 0)
-  T = pow(10, 4)
+  T = pow(10, 5)
   u_curr =  -1 * model.calc_num_conflicts()
-  B = 0.99
+  B = 0.999
   updated = True
   # best_run = copy.deepcopy(model)
   best_run = copy.copy(model)
@@ -100,16 +100,17 @@ def main():
   global best_board
   global best_conflicts
 
-  # filepath = sys.argv[1]
-  filepath = 'puzzles/puzzle-3-02-01'
+  filepath = sys.argv[1]
   model = read_data(filepath)
   best_board = model
   best_conflicts = model.calc_num_conflicts()
-  random_restarts = 0
+
+  # random_restarts = 0
 
   while True:
+
     # random_restarts += 1
-    # print(random_restarts)
+    # print("Random Restart: " + str(random_restarts))
 
     random.shuffle(model.pieces)
 
@@ -118,32 +119,16 @@ def main():
     if conflicts == 0:
       best_board = best_run
       best_conflicts = conflicts
-      print("Solution found!")
       best_board.print_solution()
       break
 
-    if conflicts < best_conflicts:
-      best_board = best_run
-      best_conflicts = conflicts
-      print('new best board:')
-      print("conflicts:", conflicts)
-      best_board.print_solution()
-      print('\n')
-
-  
-
-
-# def signal_handler(signum, frame):
-#   for team in best_teams:
-#     print(team["score"], team["team"])
-#   quit()
-
-# signal.signal(signal.SIGALRM, signal_handler)
-# signal.alarm(60)   
-# try:
-#     main()
-# except:
-#   quit()
+    # if conflicts < best_conflicts:
+    #   best_board = best_run
+    #   best_conflicts = conflicts
+    #   print('new best board:')
+    #   print("conflicts:", conflicts)
+    #   best_board.print_solution()
+    #   print('\n')
 
 if __name__ == '__main__':
   main()
