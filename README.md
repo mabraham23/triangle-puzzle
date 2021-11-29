@@ -10,9 +10,9 @@ In order to run all puzzles on **Local Search** issue the following bash command
     
 In order to run all puzzles on **Classic Search** issue the following bash command:
 
-      for p in puzzles/*; do
-        ./classic-search/depth-first.py $p
-    done
+  for p in puzzles/*; do
+    ./classic-search/depth-first.py $p
+  done
     
     
 The output for a single test will look like this:
