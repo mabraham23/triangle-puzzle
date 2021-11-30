@@ -9,58 +9,47 @@ from triangle_model import Model
 import copy
 
 def neighbors(model):
-  # model_copy = copy.deepcopy(model)
-  model_copy = copy.copy(model)
-  # reanoomly pick piece swap or piece rotation
+  model_copy = copy.deepcopy(model)
   r = random.randint(0, 2)
   if r >= 1:
-    # swap
-    # pick two random pieces that are not the same
     while True:
       p1 = random.randint(0, len(model_copy.pieces)-1)
       p2 = random.randint(0, len(model_copy.pieces)-1)
       if p1 != p2:
         break
-    # swap the pieces
     model_copy.pieces[p1], model_copy.pieces[p2] = model_copy.pieces[p2], model_copy.pieces[p1]
     return model_copy
   else:
-    # rotate
-    # pick a random piece
     p = random.randint(0, len(model_copy.pieces)-1)
-    # pick a random rotation
     piece = model_copy.pieces[p]
-    # pick a random direction in clockwise or counterclockwise
-    # r = random.randint(0, 1)
-    # direction = ""
-    # if r == 0:
-    #   direction = "clockwise"
-    # else:
-    #   direction = "counterclockwise"
-    piece.rotate("clockwise")
+    r = random.randint(0, 1)
+    direction = ""
+    if r == 0:
+      direction = "clockwise"
+    else:
+      direction = "counterclockwise"
+    piece.rotate(direction)
     return model_copy
 
-# returns the board with the least conflicts
 def simulated_annealing(model):
-  T_min = pow(10, 0)
-  T = pow(10, 5)
+  T_min = pow(10, -1)
+  T = pow(10, 4)
   u_curr =  -1 * model.calc_num_conflicts()
   B = 0.999
   updated = True
-  # best_run = copy.deepcopy(model)
-  best_run = copy.copy(model)
+  best_run = model
   while updated or T > T_min:
     updated = False
     for i in range(len(model.pieces)):
-      n = neighbors(model)
+      n = neighbors(best_run)
       u = n.calc_num_conflicts()
       if u == 0:
         return n, 0
       delta_u = - u - u_curr
       x = delta_u / T
       y = random.uniform(0, 1)
-      if x > 500:
-        return best_run, -1 * u_curr
+      # if x > 500:
+      #   return best_run, -1 * u_curr
       z = pow(math.e, x)
       if y <= z:
         u_curr = -1 * u
@@ -105,12 +94,7 @@ def main():
   best_board = model
   best_conflicts = model.calc_num_conflicts()
 
-  # random_restarts = 0
-
   while True:
-
-    # random_restarts += 1
-    # print("Random Restart: " + str(random_restarts))
 
     random.shuffle(model.pieces)
 
@@ -128,7 +112,7 @@ def main():
     #   print('new best board:')
     #   print("conflicts:", conflicts)
     #   best_board.print_solution()
-    #   print('\n')
+    #   best_board.calc_num_conflicts()
 
 if __name__ == '__main__':
   main()

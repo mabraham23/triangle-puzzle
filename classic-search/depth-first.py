@@ -7,8 +7,7 @@ def depth_first_search(initial_state):
   Q = []
   Q.append(initial_state)
   while len(Q) != 0:
-    state = Q.pop(0)
-    conf = state.calc_num_conflicts()
+    state = Q.pop()
     if state.calc_num_conflicts() == 0:
       return state
     actions = state.get_legal_actions()
@@ -16,7 +15,7 @@ def depth_first_search(initial_state):
       continue
     for a in actions:
       new_state = state.apply_action(a)
-      Q.insert(0, new_state)
+      Q.append(new_state)
   return
 
 

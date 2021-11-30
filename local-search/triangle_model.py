@@ -71,7 +71,7 @@ class Model:
       # piece 0
       if is_conflict(self.board[0], self.pieces[0].zero):
         conflicts += 1
-      if is_conflict(self.board[3], self.pieces[0].one):
+      if is_conflict(self.board[4], self.pieces[0].one):
         conflicts += 1
       if is_conflict(self.pieces[0].two, self.pieces[2].one):
         conflicts += 1
