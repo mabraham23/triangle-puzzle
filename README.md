@@ -10,10 +10,18 @@ In order to run all puzzles on **Local Search** issue the following bash command
     
 In order to run all puzzles on **Classic Search** issue the following bash command:
 
-      for p in puzzles/*; do
+    for p in puzzles/*; do
         ./classic-search/depth-first.py $p
-      done
-    
+    done
+
+To Run a single puzzle on either issue the following command:
+
+    ./local-search/simulated-annealing.py puzzles/$puzzle-name$
+
+or 
+
+    ./classic-search/depth-first.py puzzles/$puzzle-name$
+
     
 The output for a single test will look like this:
 
